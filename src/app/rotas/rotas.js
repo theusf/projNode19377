@@ -1,3 +1,10 @@
+var db = require('../../config/database');
+
+
+
+const ClientesDAO = require('../BD/clientes_dao');
+
+
 module.exports = (app) => {
 
  // Evitar problema com o CORS
@@ -26,10 +33,20 @@ app.post('/acesso', function(req, res){
 
 //abrir formulario de crientes
 app.get('/clientes', function(req, res){
-    
+    const clienteDAO = new ClientesDAO(db);
+    clienteDAO.listagemClientes(function (error,resultados)
+    {
 res.marko(
-        require('../views/clientes/listagemClientes.marko'));
+        require('../views/clientes/listagemClientes.marko'),
+        {
+            clientes: resultados
+        }
+    );
+});
+    
 }); 
+
+
   
 
 } //end do modulo rotas
