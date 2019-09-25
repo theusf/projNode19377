@@ -22,14 +22,19 @@ app.get('/', function(req, res){
     res.marko(
             require('../views/usuarios/index.marko'));
     }); 
+
+
     
-app.post('/acesso', function(req, res){
+app.get('/login', function(req, res){
         
 
     console.log('Fazendo validação do acesso');
     res.send('Espere ai que vou valida');
 
   });  
+
+
+
 
 //abrir formulario de crientes
 app.get('/clientes', function(req, res){
@@ -44,6 +49,12 @@ res.marko(
     );
 });
     
+}); 
+
+app.get('/inclusaoCliente', function(req, res){
+    
+res.marko(
+        require('../views/clientes/inclusaoClientes.marko'));
 }); 
 
 
