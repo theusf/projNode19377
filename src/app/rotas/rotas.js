@@ -22,9 +22,14 @@ app.post('/acesso', function(req, res){
     console.log('Fazendo validação do acesso');
     res.send('Espere ai que vou valida');
 
+  });  
 
-
-    });  
+//abrir formulario de crientes
+app.get('/clientes', function(req, res){
+    
+res.marko(
+        require('../views/clientes/listagemClientes.marko'));
+}); 
   
 
 } //end do modulo rotas

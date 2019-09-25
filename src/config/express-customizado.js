@@ -9,7 +9,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 // indicando um caminho de diretorio
-app.use('/atalho', express.static('src/app/views'))
+app.use('/caminho', express.static('src/app/views'))
 
 
 const rotas = require('../app/rotas/rotas');
