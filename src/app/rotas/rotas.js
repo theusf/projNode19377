@@ -84,11 +84,29 @@ clienteDAO.excluiClientes(idDoCliente)
 })
 
 
-app.get('/listaDadosCLientes/:id', function(req, res){
+app.post('/updateBDCliente', function(req,res){
     
-res.marko(
-        require('../views/clientes/atualizaClientes.marko'));
-}); 
+        const clienteDAO = new ClientesDAO(db);
+        clienteDAO.atualizaClientes(req.body)
+        .then(res.redirect('/clientes'))
+        .catch(erro => console.log(erro))
+    
+    })
+
+// abre o formulario atualizaClientes.marko
+app.get('/listaDadosClientes/:id', function (req, res) {
+    const idDoCliente = req.params.id;
+    const clienteDAO = new ClientesDAO(db);
+    clienteDAO.consultaClientePorId(idDoCliente, function (error, resultadosClientes) 
+    {
+        console.log(resultadosClientes);
+        res.marko(
+            require('../views/clientes/atualizaClientes.marko'),
+            { clientes: resultadosClientes[0] }
+        );
+    });
+});
+
 
 
 

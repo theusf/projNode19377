@@ -57,5 +57,36 @@ excluiClientes(id){
 }
 
 
+
+atualizaClientes(cliente) {
+    return new Promise((resolve, reject) => {
+        var sqlAtualiza = "UPDATE CLIENTES set nomeClie='" + cliente.nome +
+            "', cpfClie='" + cliente.cpf +
+            "', dataNiverClie='" + cliente.niver + "', emailClie='" +
+            cliente.email + "' where idClie=" + cliente.id;
+        console.log(sqlAtualiza);
+        this._db.query(sqlAtualiza,
+            function (erro) {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Atualização dos dados do clientes NÃO foi concluída!');
+                }
+                resolve();
+            }
+        );
+    });
+}
+
+
+consultaClientePorId(id, callback) {
+    var sqlCons = 'SELECT idClie, cpfClie, emailClie, nomeClie, DATE_FORMAT(dataNiverClie,"%d/%m/%Y") as dataNiverClie FROM CLIENTES WHERE idClie=' + id;
+    console.log(sqlCons);
+    this._db.query(
+        sqlCons,
+        (erro, resultados) =>
+            callback(erro, resultados)
+    )
+ } 
+
 }  // end da classe
 module.exports = ClientesDAO;
