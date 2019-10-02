@@ -34,8 +34,6 @@ app.get('/login', function(req, res){
   });  
 
 
-
-
 //abrir formulario de crientes
 app.get('/clientes', function(req, res){
     const clienteDAO = new ClientesDAO(db);
@@ -56,6 +54,42 @@ app.get('/inclusaoCliente', function(req, res){
 res.marko(
         require('../views/clientes/inclusaoClientes.marko'));
 }); 
+
+
+/*app.get('/insertBDClientes', function(req, res){
+    
+    
+}); */
+
+app.post('/insertBDClientes', function(req,res){
+
+    const clienteDAO = new ClientesDAO(db);
+    clienteDAO.incluiClientes(req.body)
+    .then(res.redirect('/clientes'))
+    .catch(erro => console.log(erro))
+
+
+})
+
+
+app.get('/removeCliente/:id', function(req,res)
+{
+
+const idDoCliente = req.params.id;
+const clienteDAO = new ClientesDAO(db);
+clienteDAO.excluiClientes(idDoCliente)
+.then(res.redirect('/Clientes'))
+.catch(erro => console.log(erro))
+
+})
+
+
+app.get('/listaDadosCLientes/:id', function(req, res){
+    
+res.marko(
+        require('../views/clientes/atualizaClientes.marko'));
+}); 
+
 
 
   
