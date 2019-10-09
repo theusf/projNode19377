@@ -1,8 +1,11 @@
 var db = require('../../config/database');
 
+const ClienteControlador = require('../controllers/clientes_controler');
+const clienteCont = new ClienteControlador();
 
+const UsuarioControlador = require('../controllers/usuarios_controler');
+const usuarioCont = new UsuarioControlador();
 
-const ClientesDAO = require('../BD/clientes_dao');
 
 
 module.exports = (app) => {
@@ -17,99 +20,27 @@ module.exports = (app) => {
 });
 
 
-app.get('/', function(req, res){
-        
-    res.marko(
-            require('../views/usuarios/index.marko'));
-    }); 
-
+app.get('/', usuarioCont.exibeFormAcesso()); 
 
     
-app.get('/login', function(req, res){
-        
-
-    console.log('Fazendo validação do acesso');
-    res.send('Espere ai que vou valida');
-
-  });  
-
+app.post('/validaBDUsuarios', usuarioCont.validaAcessoUsuario());  
 
 //abrir formulario de crientes
-app.get('/clientes', function(req, res){
-    const clienteDAO = new ClientesDAO(db);
-    clienteDAO.listagemClientes(function (error,resultados)
-    {
-res.marko(
-        require('../views/clientes/listagemClientes.marko'),
-        {
-            clientes: resultados
-        }
-    );
-});
-    
-}); 
+app.get('/clientes', clienteCont.listaClientes()   ); 
 
-app.get('/inclusaoCliente', function(req, res){
-    
-res.marko(
-        require('../views/clientes/inclusaoClientes.marko'));
-}); 
+app.get('/inclusaoCliente', clienteCont.exibeForminclusaoNovoCliente() ); 
 
 
-/*app.get('/insertBDClientes', function(req, res){
-    
-    
-}); */
-
-app.post('/insertBDClientes', function(req,res){
-
-    const clienteDAO = new ClientesDAO(db);
-    clienteDAO.incluiClientes(req.body)
-    .then(res.redirect('/clientes'))
-    .catch(erro => console.log(erro))
+app.post('/insertBDClientes', clienteCont.insereNovoCliente() );
 
 
-})
+app.get('/removeCliente/:id',clienteCont.excluiCliente())
 
 
-app.get('/removeCliente/:id', function(req,res)
-{
-
-const idDoCliente = req.params.id;
-const clienteDAO = new ClientesDAO(db);
-clienteDAO.excluiClientes(idDoCliente)
-.then(res.redirect('/Clientes'))
-.catch(erro => console.log(erro))
-
-})
-
-
-app.post('/updateBDCliente', function(req,res){
-    
-        const clienteDAO = new ClientesDAO(db);
-        clienteDAO.atualizaClientes(req.body)
-        .then(res.redirect('/clientes'))
-        .catch(erro => console.log(erro))
-    
-    })
+app.post('/updateBDCliente', clienteCont.atualizaDadosCliente());
 
 // abre o formulario atualizaClientes.marko
-app.get('/listaDadosClientes/:id', function (req, res) {
-    const idDoCliente = req.params.id;
-    const clienteDAO = new ClientesDAO(db);
-    clienteDAO.consultaClientePorId(idDoCliente, function (error, resultadosClientes) 
-    {
-        console.log(resultadosClientes);
-        res.marko(
-            require('../views/clientes/atualizaClientes.marko'),
-            { clientes: resultadosClientes[0] }
-        );
-    });
-});
+app.get('/listaDadosClientes/:id', clienteCont.listaClientes());
 
-
-
-
-  
 
 } //end do modulo rotas
