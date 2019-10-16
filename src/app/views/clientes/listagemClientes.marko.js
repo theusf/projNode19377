@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<nav class=\"navbar navbar-expand-lg navbar-light bg-light fixed-top\"><a class=\"navbar-brand\" href=\"#\">Projeto NODEJS</a><button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Alterna navegação\"><span class=\"navbar-toggler-icon\"></span></button><div class=\"collapse navbar-collapse justify-content-end\" id=\"navbarNav\"><ul class=\"navbar-nav\"><li class=\"nav-item active\"><a class=\"nav-link\" href=\"/login\">Acesso<span class=\"sr-only\">(Página atual)</span></a></li> <li class=\"nav-item\"><a class=\"nav-link\" href=\"/clientes\">ListagemClientes</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/inclusaoCliente\">InclusaoClientes</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/consultaProd\">ConsultaProduto</a></li></ul></div></nav><br><h1>Listagem de CLIENTES</h1><br><br><div><table class=\"table\"><thead class=\"thead-dark\"><tr><th>ID</th><th>NOME</th><th>DATA ANIVERSARIO</th><th>EMAIL</th><th>CPF</th><th>ATUALIZAR</th><th>REMOVER</th></tr></thead><tbody>");
+  out.w("<nav class=\"navbar navbar-expand-lg navbar-light bg-light fixed-top\"><a class=\"navbar-brand\" href=\"#\">Projeto NODEJS</a><button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Alterna navegação\"><span class=\"navbar-toggler-icon\"></span></button><div class=\"collapse navbar-collapse justify-content-end\" id=\"navbarNav\"><ul class=\"navbar-nav\"><li class=\"nav-item active\"><a class=\"nav-link\" href=\"/\">Acesso<span class=\"sr-only\">(Página atual)</span></a></li> <li class=\"nav-item\"><a class=\"nav-link\" href=\"/clientes\">ListagemClientes</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/inclusaoCliente\">InclusaoClientes</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/consultaProd\">Consultacliente</a></li></ul></div></nav><br><h1>Listagem de CLIENTES</h1><br><br><div><table class=\"table\"><thead class=\"thead-dark\"><tr><th>ID</th><th>NOME</th><th>DATA ANIVERSARIO</th><th>EMAIL</th><th>CPF</th><th>ATUALIZAR</th><th>REMOVER</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
@@ -32,13 +32,13 @@ function render(input, out, __component, component, state) {
     out.w("<tr><td>" +
       marko_escapeXml(cliente.idClie) +
       "</td><td>" +
+      marko_escapeXml(cliente.cpfClie) +
+      "</td><td>" +
       marko_escapeXml(cliente.nomeClie) +
       "</td><td>" +
       marko_escapeXml(cliente.dataNiverClie) +
       "</td><td>" +
       marko_escapeXml(cliente.emailClie) +
-      "</td><td>" +
-      marko_escapeXml(cliente.cpfClie) +
       "</td><td><i class=\"glyphicon glyphicon-edit\"></i>&nbsp&nbsp<a" +
       marko_attr("href", "/listaDadosClientes/" + cliente.idClie) +
       ">Editar</a></td><td><i class=\"glyphicon glyphicon-remove-circle\"></i>&nbsp&nbsp<a" +

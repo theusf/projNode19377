@@ -1,44 +1,36 @@
-class UsuariosDAO
+class UsuariosDAO 
 {
-    constructor(db) 
-    {
-      this._db = db;
-    }
+  // construtor da classe
+  constructor(db) 
+  {
+    this._db = db;
+  }
 
-    validaAcessoUsuario(login,senha)
-    {
-            return new Promise((resolve, reject) => {
-
-            console.log("Login da valida" + login);
-            console.log("Senha da valida" + senha);
-
-            
-                var sqlCons = "SELECT * FROM USUARIOS WHERE loginUsr='" + login + "' and senhaUsr='" + senha + "'";
-                console.log(sqlCons)
-                
-                this._db.query(sqlCons, function (erro,resultado) {
-                    if (resultado.length >0)
-                    {
-                        var dados = resultado.length;
-                        resolve(dados)
-                    }
-                    else {
-                    
-                           return reject('Erro da validação');
-                       }
-                        //resolve();
-                    });
-            
-            
-            });
-
-    }
-
+   validaAcessoUsuario(login,senha) {
+     return new Promise((resolve, reject) => {
+        console.log("LOGIN DA VALIDACAO = " + login);
+        console.log("SENHA DA VALIDACAO = " + senha);
+        var sqlCons = "SELECT * FROM USUARIOS WHERE loginUsr='" + login +
+            "' and senhaUsr='" + senha + "'";
+        console.log(sqlCons);
+        this._db.query(sqlCons, function (erro,resultado) {
+            // aqui estou checando se o retorno do SELECT trouxe dados
+            console.log(resultado);
+            if (resultado.length > 0) {
+                var dados = resultado.length;
+                console.log("fez login");
+                resolve(dados);
+            }
+            else { 
+                return reject('ACESSO NEGADO!');
+            }
+        });
+    });
+   }  // end do validaAcessoUsuario
 
 
 
 
 }
-
 
 module.exports = UsuariosDAO;

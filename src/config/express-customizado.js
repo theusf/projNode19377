@@ -4,6 +4,10 @@
    require('marko/express');
    
    const express = require('express');
+
+   const session = require('express-session');
+   const express_store = require('express-mysql-session')(session);
+   
    const app = express();
    
    const bodyParser = require('body-parser');
@@ -14,17 +18,23 @@
    }));
    
    
-   // indicando um caminho de diretorio
-   app.use('/caminho',express.static('src/app/views'));
-   
-   const rotas = require('../app/rotas/rotas');
-   rotas(app);
    
   const methodOverride = require ('method-override');
 
+//sessison
+var opcoes = {
+    host:'localhost',
+    port:3306,
+    user:'root',
+    password:'',
+    database:'nodevesp'
+   }
+var session_store = new express_store(opcoes);
+
+
    app.use(methodOverride(function (req,res) {
 
-    if (req.body && typeof req.body == 'object' && '_method' in req.body)
+    if (req.body && typeof req.body === 'object' && '_method' in req.body)
     {
         var method = req.body._method;
         delete req.body._method;
@@ -32,8 +42,20 @@
     }
 }));
 
-    
 
+app.use(session({
+    secret: 'odesempre',
+    saveUninitialized: true,
+    resave: true,
+    store: session_store
+}));
+
+
+   // indicando um caminho de diretorio
+   app.use('/caminho',express.static('src/app/views'));
+   
+   const rotas = require('../app/rotas/rotas');
+   rotas(app);
 
    // estou habilitando qq *.js a usar o meu app
    // o app é a aplicação NODEJS

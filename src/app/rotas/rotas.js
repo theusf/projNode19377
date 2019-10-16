@@ -6,6 +6,8 @@ const clienteCont = new ClienteControlador();
 const UsuarioControlador = require('../controllers/usuarios_controler');
 const usuarioCont = new UsuarioControlador();
 
+const ProdutoControlador = require('../controllers/produtos_controler');
+const produtoCont = new ProdutoControlador();
 
 
 module.exports = (app) => {
@@ -40,7 +42,9 @@ app.get('/removeCliente/:id',clienteCont.excluiCliente())
 app.post('/updateBDCliente', clienteCont.atualizaDadosCliente());
 
 // abre o formulario atualizaClientes.marko
-app.get('/listaDadosClientes/:id', clienteCont.listaClientes());
+app.get('/listaDadosClientes/:id', clienteCont.listaDadosClientes());
 
+
+app.get('/consultaProd', produtoCont.listaProdutos() ); 
 
 } //end do modulo rotas

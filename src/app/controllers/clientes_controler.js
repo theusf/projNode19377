@@ -9,6 +9,8 @@ class ClientesControler
 
     listaClientes(){
         return function(req, res){
+
+            if(req.session.login) {
             const clienteDAO = new ClientesDAO(db);
             clienteDAO.listagemClientes(function (error,resultados)
             {
@@ -20,7 +22,12 @@ class ClientesControler
             );
         });
             
-        }}
+        }
+        else {
+            res.send("<h1>Primeiramente meu irmao faz login ai</h1>")
+        }
+    
+    }}
 
 
 
